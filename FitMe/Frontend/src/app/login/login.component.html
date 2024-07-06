@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 0;
+        }
+
+        .btn-primary {
+            border-radius: 0;
+            width: 100%;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Login Form</h2>
+
+        <form #loginForm="ngForm" (ngSubmit)="loginSubmit(loginForm.value)" novalidate>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Enter Email-Id" name="emailId" #emailId="ngModel"
+                    ngModel pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" minlength="11" maxlength="30"/>
+                    <div *ngIf="emailId.errors?.['pattern'] && emailId.touched" style="color: red;">Invalid emailId format</div>
+                <div *ngIf="emailId.errors?.['required'] && emailId.touched" class="error-message">Please Enter Email-Id</div>
+                <div *ngIf="emailId.errors?.['minlength'] && emailId.touched" class="error-message">Please Enter Atleast 11 Characters for EmailId</div>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Enter Password" name="password"
+                    #password="ngModel" ngModel required minlength="8" maxlength="12" />
+                <div *ngIf="password.errors?.['required'] && password.touched" class="error-message">Please Enter Password</div>
+                <div *ngIf="password.errors?.['minlength'] && password.touched" class="error-message">Please Enter Atleast 2 Characters for Password</div>
+            </div>
+            <!-- Google Sign-In -->
+            <div id="g_id_onload"
+                data-client_id="642118565789-o12cohuhb4o57qerf0govqa16n2u3lvn.apps.googleusercontent.com"
+                data-context="signin" data-ux_mode="popup" data-login_uri="http://localhost:4200/products"
+                data-auto_prompt="false">
+            </div>
+
+            <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_blue"
+                data-text="signin_with" data-size="large" data-logo_alignment="left">
+            </div>
+
+            <button [disabled]="!loginForm.valid" class="btn btn-primary">Login</button>
+            <a href="register">SignUp</a>
+        </form>
+    </div>
+</body>
+
+</html>

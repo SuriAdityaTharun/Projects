@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <!--<title>Registration Form in HTML CSS</title>-->
+  <!---Custom CSS File--->
+  <style>
+    .container {
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    label {
+      color: #333;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <section class="container">
+    <form #regForm="ngForm" (ngSubmit)="registerSubmit(regForm.value)">
+      <header>Registration Form</header>
+      <div class="input-box">
+        <label>Full Name:</label>
+        <input type="text" name="customerName" ngModel required minlength="2" maxlength="30" />
+        <div *ngIf="regForm.controls['customerName'].errors?.['required'] && regForm.controls['customerName'].touched"
+          class="error-message">Please Enter Full Name</div>
+        <div *ngIf="regForm.controls['customerName'].errors?.['minlength'] && regForm.controls['customerName'].touched"
+          class="error-message">Full Name should be at least 2 characters</div>
+      </div>
+
+      <div class="input-box">
+        <label>EmailId:</label>
+        <input type="text" name="emailId" ngModel required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          minlength="11" maxlength="30" />
+        <div *ngIf="regForm.controls['emailId'].errors?.['required'] && regForm.controls['emailId'].touched"
+          class="error-message">Please Enter Email-Id</div>
+        <div *ngIf="regForm.controls['emailId'].errors?.['pattern'] && regForm.controls['emailId'].touched"
+          class="error-message">Please Enter a Valid Email-Id</div>
+      </div>
+      <div class="input-box">
+        <label>Password:</label>
+        <input type="password" name="password" #password="ngModel" ngModel required minlength="8" maxlength="15"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,15}$" />
+        <div *ngIf="password.errors?.['required'] && password.touched" style="color: red;">Please Enter Password</div>
+        <div *ngIf="password.errors?.['minlength'] && password.touched" style="color: red;">Please Enter At least 8
+          Characters for Password</div>
+        <div *ngIf="password.errors?.['pattern'] && password.touched" style="color: red;">Please Enter a valid password
+          with at least 1 special character, 1 lowercase letter, 1 uppercase letter, and 1 digit</div>
+      </div>
+      <div>
+        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+          [(ngModel)]="customer.confirmPassword" placeholder="Confirm Password" required minlength="8" maxlength="12">
+      </div>
+      <div *ngIf="regForm.controls['confirmPassword'].invalid && regForm.controls['confirmPassword'].touched"
+        class="error-message">
+        Please confirm your password.
+      </div>
+      <div *ngIf="regForm.dirty && customer.password !== customer.confirmPassword" class="error-message">
+        Passwords do not match.
+      </div>
+
+
+      <div class="column">
+        <div class="input-box">
+          <label>Phone Number:</label>
+          <input type="text" name="phoneNumber" ngModel required pattern="^[6-9]\d{9}$" minlength="10" maxlength="10" />
+          <div *ngIf="regForm.controls['phoneNumber'].errors?.['required'] && regForm.controls['phoneNumber'].touched"
+            class="error-message">Please Enter Phone Number</div>
+          <div *ngIf="regForm.controls['phoneNumber'].errors?.['pattern'] && regForm.controls['phoneNumber'].touched"
+            class="error-message">Please Enter a Valid Phone Number</div>
+        </div>
+
+      </div>
+      <div class="gender-box">
+        <label>gender:</label>
+        <select name="gender" ngModel>
+          <option value="" selected>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>country:</label>
+        <select name="country" ngModel aria-placeholder="Country" required>
+          <option value="" selected>Select Country</option>
+          <option value="{{country.cca3}}" *ngFor="let country of countries">{{country.name.common}} </option>
+        </select>
+        <div *ngIf="regForm.controls['country'].errors?.['required'] && regForm.controls['country'].touched"
+          class="error-message">Please Select Country</div>
+      </div>
+      <button>Submit</button>
+    </form>
+  </section>
+</body>
+
+</html>

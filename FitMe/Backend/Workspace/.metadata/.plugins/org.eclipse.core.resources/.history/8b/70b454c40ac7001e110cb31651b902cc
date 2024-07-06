@@ -1,0 +1,29 @@
+package com.dao;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.model.Customer;
+
+@Service
+public class CustomerDao {
+
+	@Autowired
+	CustomerRepository customerRepository;
+	
+	public List<Customer> getCustomers(){
+		return customerRepository.findAll();
+	}
+	
+	public Customer customerLogin(String emailId, String password){
+		Customer customer = customerRepository.customerLogin(emailId, password);
+		return customer;
+	}
+	
+	public Customer addCustomer(Customer customer){
+		Customer savedCustomer = customerRepository.save(customer);
+		return savedCustomer;
+	}
+}
